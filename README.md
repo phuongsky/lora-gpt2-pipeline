@@ -25,6 +25,10 @@ lora-nlp-project/
 ├── requirements.txt              # Requirements cho training + inference
 ├── README.md                     # Hướng dẫn
 └── .gitignore
+Build Docker image:
+docker build -t lora-infer .
+Chạy inference API:
+docker run -p 8000:8000 lora-infer
 
 # LoRA GPT‑2 Pipeline: Train, Quantize, Serve, UI & Docker
 
