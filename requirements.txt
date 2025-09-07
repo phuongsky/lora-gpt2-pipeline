@@ -1,0 +1,12 @@
+transformers
+datasets
+peft
+accelerate
+huggingface_hub
+bitsandbytes
+deepspeed
+wandb
+fastapi
+uvicorn
+gradio
+pyyaml
