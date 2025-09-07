@@ -6,7 +6,8 @@ project/
 └── requirements.txt             # ✅ Các thư viện cần thiết
 # Huấn luyện
 python train.py
-
+Chạy UI:
+python app_ui.py
 # Chạy inference API
 uvicorn infer_api:app --reload --port 8000
 POST http://localhost:8000/generate
