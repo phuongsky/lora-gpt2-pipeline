@@ -69,7 +69,10 @@ args = TrainingArguments(
     evaluation_strategy="no",
     save_total_limit=1,
     fp16=cfg['training']['fp16'],
-    report_to="none"
+    report_to="none",
+    deepspeed=cfg['training'].get('deepspeed', None),
+    report_to=cfg['training'].get('report_to', "none"),
+    run_name=cfg['training'].get('run_name', None)
 )
 
 collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
