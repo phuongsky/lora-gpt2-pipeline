@@ -28,5 +28,5 @@ training:
   run_name: "distilgpt2-lora-run1"
 
 hf_hub:
-  repo_id: "yourusername/lora-distilgpt2"
+  repo_id: "phuongsky/lora-distilgpt2"
   push_to_hub: true
