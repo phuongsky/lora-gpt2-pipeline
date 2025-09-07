@@ -30,6 +30,45 @@ Build Docker image:
 docker build -t lora-infer .
 Chạy inference API:
 docker run -p 8000:8000 lora-infer
+⚡ 4. Huấn luyện Multi-GPU + DeepSpeed + WandB
+Chạy huấn luyện multi-GPU:
+accelerate launch --multi_gpu train.py
+Hoặc với deepspeed:
+deepspeed train.py
+
+# 🤖 LoRA NLP Pipeline with Quantization, Gradio UI & Inference API
+
+This project provides a complete end-to-end solution for:
+- Fine-tuning `DistilGPT2` with 🧠 **LoRA** (via `peft`)
+- Efficient training with 🔥 **DeepSpeed + quantization (4-bit/8-bit)**
+- Deployment-ready **FastAPI** server + **Gradio UI**
+- YAML-based config for reproducibility
+- Optional W&B logging
+
+## 🚀 Features
+
+- ✅ Train with LoRA & HuggingFace PEFT
+- ✅ Multi-dataset & multi-GPU training
+- ✅ Quantized inference with bitsandbytes
+- ✅ Push adapter to Hugging Face Hub
+- ✅ Docker container for API deployment
+- ✅ Gradio UI for demo
+
+## 🛠️ Quickstart
+
+```bash
+# 1. Install deps
+pip install -r requirements.txt
+
+# 2. Train model
+python train.py
+
+# 3. Run API
+uvicorn infer_api:app --port 8000
+
+# 4. Run UI
+python app_ui.py
+----------------------------
 
 # LoRA GPT‑2 Pipeline: Train, Quantize, Serve, UI & Docker
 
