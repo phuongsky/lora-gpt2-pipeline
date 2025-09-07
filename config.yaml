@@ -1,0 +1,32 @@
+model:
+  base_model: "distilgpt2"
+  quantization: "int4"
+
+lora:
+  r: 8
+  lora_alpha: 32
+  dropout: 0.1
+  target_modules: ["c_attn"]
+
+dataset:
+  train_dataset: "phuongsky/PSD2"
+  valid_dataset: "phuongsky/PSD2"
+  text_column: "text"
+  max_length: 128
+
+training:
+  output_dir: "./outputs"
+  batch_size: 4
+  epochs: 3
+  learning_rate: 5e-5
+  logging_steps: 10
+  save_steps: 100
+  fp16: false
+  seed: 42
+  deepspeed: "ds_config.json"
+  report_to: "wandb"
+  run_name: "distilgpt2-lora-run1"
+
+hf_hub:
+  repo_id: "yourusername/lora-distilgpt2"
+  push_to_hub: true
