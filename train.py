@@ -61,15 +61,14 @@ valid_dataset = valid_dataset.map(tokenize_fn, batched=True, remove_columns=[dat
 # ============================
 args = TrainingArguments(
     output_dir=cfg['training']['output_dir'],
-    per_device_train_batch_size=cfg['training']['batch_size'],
-    num_train_epochs=cfg['training']['epochs'],
-    learning_rate=cfg['training']['learning_rate'],
-    logging_steps=cfg['training']['logging_steps'],
-    save_steps=cfg['training']['save_steps'],
-    evaluation_strategy="no",
+    per_device_train_batch_size=int(cfg['training']['batch_size']),
+    num_train_epochs=float(cfg['training']['epochs']),
+    learning_rate=float(cfg['training']['learning_rate']),
+    logging_steps=int(cfg['training']['logging_steps']),
+    save_steps=int(cfg['training']['save_steps']),
+    eval_strategy="no",
     save_total_limit=1,
-    fp16=cfg['training']['fp16'],
-    report_to="none",
+    fp16=bool(cfg['training']['fp16']),
     deepspeed=cfg['training'].get('deepspeed', None),
     report_to=cfg['training'].get('report_to', "none"),
     run_name=cfg['training'].get('run_name', None)
@@ -94,6 +93,10 @@ model.save_pretrained(cfg['training']['output_dir'])
 tokenizer.save_pretrained(cfg['training']['output_dir'])
 
 if cfg['hf_hub']['push_to_hub']:
-    login()
-    model.push_to_hub(cfg['hf_hub']['repo_id'])
-    tokenizer.push_to_hub(cfg['hf_hub']['repo_id'])
+    token = os.environ.get('HUGGINGFACE_HUB_TOKEN') or os.environ.get('HF_TOKEN')
+    if token:
+        login(token=token)
+    else:
+        print("Hugging Face token not set in environment; skipping login to avoid interactive prompt.")
+    model.push_to_hub(cfg['hf_hub']['repo_id'], token=token)
+    tokenizer.push_to_hub(cfg['hf_hub']['repo_id'], token=token)

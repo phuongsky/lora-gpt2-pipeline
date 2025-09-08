@@ -1,16 +1,24 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse, Response
 from pydantic import BaseModel
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
 app = FastAPI()
 
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse(url="/docs")
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return Response(status_code=204)
+
 # Load model + tokenizer
-repo_id = "yourusername/lora-distilgpt2"
+repo_id = "distilgpt2"
 base_model = "distilgpt2"
 tokenizer = AutoTokenizer.from_pretrained(repo_id)
 model = AutoModelForCausalLM.from_pretrained(base_model)
-model = PeftModel.from_pretrained(model, repo_id)
 
 pipe = pipeline("text-generation", model=model, tokenizer=tokenizer)
 

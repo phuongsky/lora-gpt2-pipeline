@@ -1,5 +1,5 @@
 model:
-  base_model: "distilgpt2"
+  base_model: "openai/gpt-oss-120b"
   quantization: "int4"
 
 lora:
@@ -9,8 +9,8 @@ lora:
   target_modules: ["c_attn"]
 
 dataset:
-  train_dataset: "phuongsky/PSD2"
-  valid_dataset: "phuongsky/PSD2"
+  train_dataset: "jxm/gpt-oss20b-samples"
+  valid_dataset: "jxm/gpt-oss20b-samples"
   text_column: "text"
   max_length: 128
 
@@ -23,10 +23,10 @@ training:
   save_steps: 100
   fp16: false
   seed: 42
-  deepspeed: "ds_config.json"
+  deepspeed: null
   report_to: "wandb"
-  run_name: "distilgpt2-lora-run1"
+  run_name: "psm-run1"
 
 hf_hub:
-  repo_id: "phuongsky/lora-distilgpt2"
+  repo_id: "phuongsky/psm"
   push_to_hub: true
